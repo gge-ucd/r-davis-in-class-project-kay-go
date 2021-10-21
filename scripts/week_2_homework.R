@@ -28,7 +28,7 @@ prob <- hw2_1[hw2_1 > 14]
 prob1 <- prob[prob < 38]
 prob1
 #the "|" or AND function wasn't working for me for some reason, so I had to break this step down into two mini-steps. Might ask about this in class tomorrow.
-#in class, we used &
+#in class, we used &, ALSO just realized that | is the OR command
 
 #HW Problem 2
 times3 <- prob1*3
