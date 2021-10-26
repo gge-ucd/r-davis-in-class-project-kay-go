@@ -107,7 +107,56 @@ surveys_hindfoot_half %>% group_by(species_id) %>%
   head()
 #mutate.if function will allow you to mutate if numeric, etc.
 
-#Notes from Week 5 videos
+#Class 10/21/2021
 
 
+#command + shift + m creates pipe
+#really wide or really long tables sometimes not visualized well by tbbls, can just use the review command
+
+#Conditional Statements, e.g. is it larger or smaller than the mean value?
+library(tidyverse)
+surveys <- read_csv("data/portal_data_joined.csv")
+surveys %>% filter(!is.na(weight)) %>% mutate(weight_cat = case_when(weight > mean(weight) ~ "big", weight < mean(weight) ~ "small")) %>% select(weight, weight_cat) %>% tail()
+#if(){this}else{thenthis}
+# - represents "then"
+#less clunky than ifelse when there are multiple layers
+
+#Conditional Statements challenge
+data(iris)
+summary(iris$Petal.Length)
+str(iris)
+is.na(iris)
+str(summary(iris$Petal.Length))
+
+iris %>% mutate(petal.length_cat = case_when(Petal.Length < summary(iris$Petal.Length)[2] ~ "small", Petal.Length > summary(iris$Petal.Length)[2] & Petal.Length < summary(iris$Petal.Length)[5] ~ "medium", Petal.Length > summary(iris$Petal.Length)[5] ~ "large"))
+#wooh! watch out for your caseUNDERSCOREwhen
+
+#other way to do this?
+iris %>% mutate(length_cat = ifelse(Peta.Length <- 1.6, "small", ifelse(Petal.Length) >= 5.1, "large", "medium"))
+#if first statement is true, small, then go to nested. if nest is true, go to large and if still not true, go to medium.
+
+#Using the iris data frame (this is built in to R), create a new variable that categorizes petal length into three groups:
+
+    small (less than or equal to the 1st quartile)
+    medium (between the 1st and 3rd quartiles)
+    large (greater than or equal to the 3rd quartile)
+
+Hint: Explore the iris data using summary(iris$Petal.Length), to see the petal length distribution. Then use your function of choice: ifelse() or case_when() to make a new variable named petal.length.cat based on the conditions listed above. Note that in the iris data frame there are no NAs, so we don’t have to deal with them here.
+
+#Join function. Taking two dataframes and comparing them. #Columns in common, compares. Finds match? Performs function.
+
+surveys <- read_csv("data/portal_data_joined.csv")
+tail <- read_csv("data/tail_length.csv") 
+intersect(colnames(surveys), colnames(tail))
+#above function tells us what they have in common
+df_joined <- left_join(surveys, tail, by = "record_id")
+str(df_joined)
+
+#pivoting!
+temp_df <- surveys %>% group_by(year,plot_id) %>% tally()
+pivot_wider(temp_df, names_from = 'year', values_from = 'n') 
+
+#grab names_from... spreading out year column, filling out rows with n
+#don't need to use id_cols because there's only one kept
+#need to call a new dataframe
 
