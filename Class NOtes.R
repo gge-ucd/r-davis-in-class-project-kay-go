@@ -211,4 +211,4 @@ ggplot(data = hindfoot_survey, mapping = aes(x = species_id, y = hindfoot_length
 
 #playing around with sizing
 #moving labels... + labs(x = "Species ID", y = "Hindfoot Length", title = "Boxplot", color = "Plot ID") where color is referring to the legend essentially. + theme() - there's a lot you can do here even beyond just background colors etc.
-
+#rotate: + theme(axis.title.x = element_text(angle = 45))
